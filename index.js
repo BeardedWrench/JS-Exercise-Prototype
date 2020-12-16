@@ -39,16 +39,20 @@ function Airplane(name) {
           + It should return a string with `name` and `age`. Example: "Mary, 50"
   */
   
- function Person() {
-    
-  }
- 
- 
-
-  
-  
-  
-  
+function Person( pName, pAge ) {
+  this.name = pName;
+  this.age = pAge;
+  this.stomach = [];
+}
+Person.prototype.eat = function( str ){
+  this.stomach.push( str );
+}
+Person.prototype.poop = function(){
+  this.stomach.splice(0, this.stomach.length);
+}
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
+}  
   /*
     TASK 2
       - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -63,9 +67,23 @@ function Airplane(name) {
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- function Car() {
-    
+function Car( pModel, pMilesPerGallon ) {
+    this.model = pModel;
+    this.milesPerGallon = pMilesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+}
+Car.prototype.fill = function( gallons ){
+  this.tank += gallons;
+}
+Car.prototype.drive = function( distance ){
+  this.odometer += distance;
+  if( this.tank === 0 ){
+    return `I ran out of fuel at ${this.odometer}`
+  }else{
+    this.tank -= distance / this.milesPerGallon;
   }
+}
   
   
   /*
@@ -75,18 +93,23 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
-  }
- 
+function Baby( pName, pAge, favToy ) {
+  Person.call(this, pName, pAge);
+  this.favoriteToy = favToy;
+}
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
   
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. The new binding uses "this" as a way to select a specific key in the constructor function
+    2. Implicit Binding use of "this" takes the function on the left as reference
+    3. Window binding refers to the global scope of JS
+    4. Explicit binding is used with the call method
   */
   
   
