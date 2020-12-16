@@ -45,7 +45,11 @@ function Person( pName, pAge ) {
   this.stomach = [];
 }
 Person.prototype.eat = function( str ){
-  this.stomach.push( str );
+  if(this.stomach.length >= 10){
+    return `You're too full, go poop first`
+  }else{
+    this.stomach.push( str );
+  }
 }
 Person.prototype.poop = function(){
   this.stomach.splice(0, this.stomach.length);
